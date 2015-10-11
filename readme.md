@@ -36,4 +36,5 @@ PcmFormat.sample(value, inputFormat, outputFormat);
 ```
 
 > **Related**
+>
 > [pcm-format](https://npmjs.org/package/pcm-format) — transforms pcm stream per sample.
