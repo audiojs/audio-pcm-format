@@ -8,6 +8,7 @@ var Transform = require('stream').Transform;
 var PassThrough = require('stream').PassThrough;
 var extend = require('xtend/mutable');
 var convertSample = require('./sample');
+var defaultFormat = require('./default');
 
 
 /** @constructor */
@@ -130,16 +131,7 @@ PCMFormat.getChannelsMap = function (n) {
 
 
 /** Default PCM settings */
-PCMFormat.default = {
-	channels: 2,
-	sampleRate: 44100,
-	byteOrder: 'LE',
-	bitDepth: 16,
-	signed: true,
-	float: false,
-	interleaved: true,
-	samplesPerFrame: undefined
-};
+PCMFormat.default = defaultFormat;
 
 
 /** Export utils */
