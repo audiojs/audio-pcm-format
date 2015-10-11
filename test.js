@@ -53,3 +53,8 @@ describe('Resample', function () {
 describe('Output buffer size', function () {
 
 });
+
+
+describe('Passthrough', function () {
+
+});

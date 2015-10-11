@@ -29,6 +29,10 @@ PcmFormat.default === {
 	//force output chunk size
 	samplesPerFrame: undefined
 }
+
+
+/** Convert value from format A to format B */
+PcmFormat.sample(value, inputFormat, outputFormat);
 ```
 
 * [pcm-format](https://npmjs.org/package/pcm-format) — transforms pcm stream per sample.

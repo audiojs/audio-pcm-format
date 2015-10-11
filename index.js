@@ -7,6 +7,7 @@ var inherits = require('inherits');
 var Transform = require('stream').Transform;
 var PassThrough = require('stream').PassThrough;
 var extend = require('xtend/mutable');
+var convertSample = require('./sample');
 
 
 /** @constructor */
@@ -41,9 +42,6 @@ function PCMFormat (input, output) {
 	this.input.sampleSize = this.input.bitDepth / 8;
 	this.output.sampleSize = this.output.bitDepth / 8;
 
-	this.input.maxInt = Math.pow(2, this.input.bitDepth-1);
-	this.output.maxInt = Math.pow(2, this.output.bitDepth-1);
-
 	this.input.method = 'read' + PCMFormat.getMethodSuffix(this.input);
 	this.output.method = 'write' + PCMFormat.getMethodSuffix(this.output);
 
@@ -76,16 +74,8 @@ PCMFormat.prototype._transform = function (inputChunk, enc, cb) {
 			offset = (input.interleaved ? channel + i * channels.length : channel * inputFrameLength + i) * input.sampleSize;
 			value = inputChunk[input.method](offset);
 
-			//normalize value to float form -1..1
-			if (!input.float) {
-				if (!input.signed) {
-					value -= input.maxInt;
-				}
-				value /= input.maxInt;
-			}
-
-			//put value to the proper channel
-			data[channel].push(value);
+			//put recalculated value to the proper channel
+			data[channel].push(convertSample(value, input, output));
 		}
 	}
 
@@ -104,16 +94,6 @@ PCMFormat.prototype._transform = function (inputChunk, enc, cb) {
 
 				//pick resampled value
 				value = data[channel][Math.round(i * sampleRateRatio)];
-
-				//convert value to needed form
-				if (!output.float) {
-					if (output.signed) {
-						value = value * (output.maxInt - 1);
-					} else {
-						value = (value + 1) * output.maxInt;
-					}
-					value = Math.floor(value);
-				}
 
 				//write value to proper position
 				offset = (output.interleaved ? channel + i * channels.length : channel * outputFrameLength + i) * output.sampleSize;
@@ -161,6 +141,10 @@ PCMFormat.default = {
 	samplesPerFrame: undefined
 };
 
+
+/** Export utils */
+PCMFormat.sample = convertSample;
+PCMFormat.frame = convertFrame;
 
 
 module.exports = PCMFormat;
