@@ -144,7 +144,6 @@ PCMFormat.default = {
 
 /** Export utils */
 PCMFormat.sample = convertSample;
-PCMFormat.frame = convertFrame;
 
 
 module.exports = PCMFormat;
