@@ -5,14 +5,13 @@ var PcmFormat = require('audio-pcm-format');
 var Speaker = require('node-speaker');
 
 
-/** Transform input format to optional output format */
+/** Transform input format to output format */
 PcmFormat(inputFormat, outputFormat?).pipe(Speaker());
 
 
 /** Default output/input format, extended with passed formats */
 PcmFormat.default === {
-	//number and order of output channels
-	//pass an array [0, 1] with input channel numbers to remap in a custom way
+	//number or order of channels, if array, e. g. [0, 1] → [1, 0]
 	channels: 2,
 
 	//single sample params
@@ -21,19 +20,15 @@ PcmFormat.default === {
 	signed: true,
 	float: false,
 
-	//resample
+	//resample (optional)
 	sampleRate: 44100,
 
 	//the way to read/write input/output samples: [LRLRLRLR] or [LLLLRRRR]
 	interleaved: true,
 
-	//force output chunks size
+	//force output chunk size
 	samplesPerFrame: undefined
 }
-
-
-/** Return buffer method suffix based on format, e.g. 'Int16LE', or 'FloatLE' */
-PcmFormat.getMethodSuffix(format);
 ```
 
 * [pcm-format](https://npmjs.org/package/pcm-format) — transforms pcm stream per sample.
