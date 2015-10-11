@@ -9,6 +9,7 @@ var PassThrough = require('stream').PassThrough;
 var extend = require('xtend/mutable');
 var convertSample = require('./sample');
 var defaultFormat = require('./default');
+var methodSuffix = require('./method');
 
 
 /** @constructor */
@@ -43,8 +44,8 @@ function PCMFormat (input, output) {
 	this.input.sampleSize = this.input.bitDepth / 8;
 	this.output.sampleSize = this.output.bitDepth / 8;
 
-	this.input.method = 'read' + PCMFormat.getMethodSuffix(this.input);
-	this.output.method = 'write' + PCMFormat.getMethodSuffix(this.output);
+	this.input.method = 'read' + methodSuffix(this.input);
+	this.output.method = 'write' + methodSuffix(this.output);
 
 	this.input.channels = PCMFormat.getChannelsMap(this.input.channels);
 	this.output.channels = PCMFormat.getChannelsMap(this.output.channels);
@@ -113,11 +114,6 @@ PCMFormat.prototype._transform = function (inputChunk, enc, cb) {
 };
 
 
-/** Generate method postfix based on  */
-PCMFormat.getMethodSuffix = function (format) {
-	return (format.float ? 'Float' : ((format.signed ? '' : 'U') + 'Int' + format.bitDepth)) + format.byteOrder;
-};
-
 /** Generate channels array from number of channels */
 PCMFormat.getChannelsMap = function (n) {
 	if (!Array.isArray(n)) {
@@ -130,7 +126,11 @@ PCMFormat.getChannelsMap = function (n) {
 }
 
 
-/** Default PCM settings */
+/** Generate method postfix based on  */
+PCMFormat.methodSuffix = methodSuffix;
+
+
+/** Default PCM settings. Technically redefinable. */
 PCMFormat.default = defaultFormat;
 
 

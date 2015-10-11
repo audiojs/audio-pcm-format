@@ -9,7 +9,7 @@ var Speaker = require('node-speaker');
 PcmFormat(inputFormat, outputFormat?).pipe(Speaker());
 
 
-/** Default output/input format, extended with passed formats */
+/** Default output/input format, extended with passed formats. Redefine if needed. */
 PcmFormat.default === {
 	//number or order of channels, if array, e. g. [0, 1] → [1, 0]
 	channels: 2,
@@ -28,11 +28,15 @@ PcmFormat.default === {
 
 	//force output chunk size
 	samplesPerFrame: undefined
-}
+};
 
 
 /** Convert value from format A to format B */
 PcmFormat.sample(value, inputFormat, outputFormat);
+
+
+/** Ger buffer method suffix for the format, e.g. `Int16LE` */
+PcmFormat.methodSuffix(format);
 ```
 
 > **Related**<br/>
