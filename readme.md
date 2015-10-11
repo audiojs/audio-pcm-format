@@ -1,12 +1,14 @@
-Transform PCM audio stream format.
+# Audio-pcm-transform
+
+Transform PCM audio stream format:
 
 * Remap channels, e.g. swap left to right or map mono to stereo.
-* Resample, e. g. 88200 → 44100.
-* Change single sample format, e. g. unsigned int 16 BE to float LE.
-* Change [order of samples](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Basic_concepts_behind_Web_Audio_API#Planar_versus_interleaved_buffers) from interleaved to planar, e. g. LLLLRRRR → LRLRLRLR.
-* By default converts to interleaved Int16LE — default format of [node-speaker]() and other modules.
-* If input format quals to output format — returns passthrough stream.
+* Resample, e. g. `88200` → `44100`.
+* Change single sample format, e. g. `Int16BE` to `FloatLE`.
+* Change [order of samples](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Basic_concepts_behind_Web_Audio_API#Planar_versus_interleaved_buffers) from interleaved to planar, e. g. `LLLLRRRR` → `LRLRLRLR`.
 
+
+## Usage
 
 [`npm install audio-pcm-format`](https://npmjs.org/package/audio-pcm-format)
 
