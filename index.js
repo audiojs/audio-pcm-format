@@ -1,6 +1,7 @@
 /**
- * @module audio-transform
+ * @module audio-pcm-format
  */
+
 
 var inherits = require('inherits');
 var Transform = require('stream').Transform;
@@ -29,6 +30,14 @@ function PCMFormat (input, output) {
 	if (eq) return new PassThrough();
 
 	//precalc
+	if (this.input.float) {
+		this.input.bitDepth = 32;
+		this.input.signed = true;
+	}
+	if (this.output.float) {
+		this.output.bitDepth = 32;
+		this.output.signed = true;
+	}
 	this.input.sampleSize = this.input.bitDepth / 8;
 	this.output.sampleSize = this.output.bitDepth / 8;
 
@@ -64,7 +73,7 @@ PCMFormat.prototype._transform = function (inputChunk, enc, cb) {
 	for (var i = 0; i < inputFrameLength; i++) {
 		for (var cIdx = 0; cIdx < channels.length; cIdx++) {
 			channel = channels[cIdx];
-			offset = input.interleaved ? channel + i * channels.length : channel * inputFrameLength + i;
+			offset = (input.interleaved ? channel + i * channels.length : channel * inputFrameLength + i) * input.sampleSize;
 			value = inputChunk[input.method](offset);
 
 			//normalize value to float form -1..1
@@ -98,14 +107,16 @@ PCMFormat.prototype._transform = function (inputChunk, enc, cb) {
 
 				//convert value to needed form
 				if (!output.float) {
-					value *= output.maxInt;
-					if (!output.signed) {
-						value += output.maxInt;
+					if (output.signed) {
+						value = value * (output.maxInt - 1);
+					} else {
+						value = (value + 1) * output.maxInt;
 					}
+					value = Math.floor(value);
 				}
 
 				//write value to proper position
-				offset = output.interleaved ? channel + i * channels.length : channel * outputFrameLength + i;
+				offset = (output.interleaved ? channel + i * channels.length : channel * outputFrameLength + i) * output.sampleSize;
 
 				outputChunk[output.method](value, offset);
 			}
@@ -129,13 +140,12 @@ PCMFormat.getMethodSuffix = function (format) {
 /** Generate channels array from number of channels */
 PCMFormat.getChannelsMap = function (n) {
 	if (!Array.isArray(n)) {
-		var l = n.length;
-		n = [];
-		for (var i = 0; i < l; i++) {
-			n[i] = i;
+		var result = [];
+		for (var i = 0; i < n; i++) {
+			result[i] = i;
 		}
 	}
-	return n;
+	return result;
 }
 
 
@@ -150,3 +160,7 @@ PCMFormat.default = {
 	interleaved: true,
 	samplesPerFrame: undefined
 };
+
+
+
+module.exports = PCMFormat;

@@ -4,7 +4,7 @@
   "description": "Transform audio PCM format",
   "main": "index.js",
   "scripts": {
-    "test": "node test"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -23,5 +23,12 @@
   "bugs": {
     "url": "https://github.com/audio-lab/pcm-format/issues"
   },
-  "homepage": "https://github.com/audio-lab/pcm-format"
+  "homepage": "https://github.com/audio-lab/pcm-format",
+  "devDependencies": {
+    "mocha": "^2.3.3"
+  },
+  "dependencies": {
+    "inherits": "^2.0.1",
+    "xtend": "^4.0.0"
+  }
 }
