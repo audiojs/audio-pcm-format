@@ -35,4 +35,6 @@ PcmFormat.default === {
 PcmFormat.sample(value, inputFormat, outputFormat);
 ```
 
-* [pcm-format](https://npmjs.org/package/pcm-format) — transforms pcm stream per sample.
+#### Similar
+
+> * [pcm-format](https://npmjs.org/package/pcm-format) — transforms pcm stream per sample.
