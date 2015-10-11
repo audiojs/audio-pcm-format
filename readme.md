@@ -14,7 +14,7 @@ var PcmFormat = require('audio-pcm-format');
 var Speaker = require('node-speaker');
 
 
-/** Transform input format to optional output format. If format is omitted - default one is used */
+/** Transform input format to optional output format. */
 PcmFormat(inputFormat, outputFormat?).pipe(Speaker());
 
 
