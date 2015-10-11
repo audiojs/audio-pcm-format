@@ -1,12 +1,10 @@
-Transform PCM audio stream format:
+> Transform PCM audio stream format
 
 * Remap channels, e.g. swap left to right.
 * [Upmix or downmix](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Basic_concepts_behind_Web_Audio_API#Up-mixing_and_down-mixing) channels.
 * Resample, e. g. `88200` → `44100`.
 * Change single sample format, e. g. `Int16BE` to `FloatLE`.
 * Change [order of samples](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Basic_concepts_behind_Web_Audio_API#Planar_versus_interleaved_buffers) from interleaved to planar, e. g. `LLLLRRRR` → `LRLRLRLR`.
-
-[![Build Status](https://travis-ci.org/dfcreative/audio-pcm-format.svg?branch=master)](https://travis-ci.org/dfcreative/audio-pcm-format) [![Code Climate](https://codeclimate.com/github/dfcreative/audio-pcm-format/badges/gpa.svg)](https://codeclimate.com/github/dfcreative/audio-pcm-format) [![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
 
 [![npm install audio-pcm-format](https://nodei.co/npm/audio-pcm-format.png?mini=true)](https://npmjs.org/package/audio-pcm-format/)
 
@@ -51,3 +49,6 @@ PcmFormat.getMethodSuffix(format);
 ## Related
 
 * [pcm-format](https://npmjs.org/package/pcm-format) — transforms pcm stream per sample.
+
+
+[![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
