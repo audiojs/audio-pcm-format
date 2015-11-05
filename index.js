@@ -7,9 +7,7 @@ var inherits = require('inherits');
 var Transform = require('stream').Transform;
 var PassThrough = require('stream').PassThrough;
 var extend = require('xtend/mutable');
-var convertSample = require('./sample');
-var defaultFormat = require('./default');
-var methodSuffix = require('./method');
+var util = require('pcm-util');
 
 
 /** @constructor */
@@ -32,21 +30,11 @@ function PCMFormat (input, output) {
 	}
 	if (eq) return new PassThrough();
 
-	//precalc
-	if (this.input.float) {
-		this.input.bitDepth = 32;
-		this.input.signed = true;
-	}
-	if (this.output.float) {
-		this.output.bitDepth = 32;
-		this.output.signed = true;
-	}
-	this.input.sampleSize = this.input.bitDepth / 8;
-	this.output.sampleSize = this.output.bitDepth / 8;
+	//precalc formats
+	this.input = util.normalizeFormat(this.input);
+	this.output = util.normalizeFormat(this.output);
 
-	this.input.method = 'read' + methodSuffix(this.input);
-	this.output.method = 'write' + methodSuffix(this.output);
-
+	//convert channels to arrays, if mapping is required
 	this.input.channels = PCMFormat.getChannelsMap(this.input.channels);
 	this.output.channels = PCMFormat.getChannelsMap(this.output.channels);
 
@@ -74,10 +62,10 @@ PCMFormat.prototype._transform = function (inputChunk, enc, cb) {
 		for (var cIdx = 0; cIdx < channels.length; cIdx++) {
 			channel = channels[cIdx];
 			offset = (input.interleaved ? channel + i * channels.length : channel * inputFrameLength + i) * input.sampleSize;
-			value = inputChunk[input.method](offset);
+			value = inputChunk[input.readMethodName](offset);
 
 			//put recalculated value to the proper channel
-			data[channel].push(convertSample(value, input, output));
+			data[channel].push(util.convertSample(value, input, output));
 		}
 	}
 
@@ -100,7 +88,7 @@ PCMFormat.prototype._transform = function (inputChunk, enc, cb) {
 				//write value to proper position
 				offset = (output.interleaved ? channel + i * channels.length : channel * outputFrameLength + i) * output.sampleSize;
 
-				outputChunk[output.method](value, offset);
+				outputChunk[output.writeMethodName](value, offset);
 			}
 		}
 
@@ -123,19 +111,12 @@ PCMFormat.getChannelsMap = function (n) {
 		}
 	}
 	return result;
-}
-
-
-/** Generate method postfix based on  */
-PCMFormat.methodSuffix = methodSuffix;
+};
 
 
 /** Default PCM settings. Technically redefinable. */
-PCMFormat.default = defaultFormat;
-
-
-/** Export utils */
-PCMFormat.sample = convertSample;
+PCMFormat.default = util.defaultFormat;
+PCMFormat.default.samplesPerFrame = null;
 
 
 module.exports = PCMFormat;

@@ -6,7 +6,7 @@ var Speaker = require('node-speaker');
 
 
 /** Transform input format to output format */
-PcmFormat(inputFormat, outputFormat?).pipe(Speaker());
+myStream.pipe(PcmFormat(inputFormat, outputFormat?)).pipe(Speaker());
 
 
 /** Default output/input format, extended with passed formats. Redefine if needed. */
@@ -31,13 +31,8 @@ PcmFormat.default === {
 };
 
 
-/** Convert value from format A to format B */
-PcmFormat.sample(value, inputFormat, outputFormat);
-
-
-/** Ger buffer method suffix for the format, e.g. `Int16LE` */
-PcmFormat.methodSuffix(format);
 ```
 
 > **Related**<br/>
-> [pcm-format](https://npmjs.org/package/pcm-format) — transforms pcm stream per sample.
+> [pcm-util](https://npmjs.org/package/pcm-util) — utils for pcm transforms.<br/>
+> [pcm-format](https://npmjs.org/package/pcm-format) — transforms pcm stream per sample.<br/>
