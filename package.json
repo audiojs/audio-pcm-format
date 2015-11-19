@@ -1,6 +1,6 @@
 {
   "name": "audio-pcm-format",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Transform audio PCM format",
   "main": "index.js",
   "scripts": {
