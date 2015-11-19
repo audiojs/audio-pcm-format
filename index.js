@@ -115,7 +115,7 @@ PCMFormat.getChannelsMap = function (n) {
 
 
 /** Default PCM settings. Technically redefinable. */
-PCMFormat.default = util.defaultFormat;
+PCMFormat.default = extend({}, util.defaultFormat);
 PCMFormat.default.samplesPerFrame = null;
 
 
