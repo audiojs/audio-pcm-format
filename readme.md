@@ -20,9 +20,6 @@ PcmFormat.default === {
 	signed: true,
 	float: false,
 
-	//resample (optional)
-	sampleRate: 44100,
-
 	//the way to read/write input/output samples: [LRLRLRLR] or [LLLLRRRR]
 	interleaved: true,
 
