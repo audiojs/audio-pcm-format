@@ -28,7 +28,7 @@
     "mocha": "^2.3.3"
   },
   "dependencies": {
-    "inherits": "^2.0.1",
+    "inherits": "^2.0.2",
     "pcm-util": "^1.1.10",
     "xtend": "^4.0.0"
   }
