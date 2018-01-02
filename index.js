@@ -98,6 +98,8 @@ PCMFormat.prototype._transform = function (inputChunk, enc, cb) {
 		});
 
 		cb(null, outputChunk);
+	} else {
+		cb();
 	}
 };
 
