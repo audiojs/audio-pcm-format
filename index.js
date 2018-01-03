@@ -26,10 +26,6 @@ function PCMFormat (input, output) {
         }
     }
     if (eq) return new PassThrough();
-
-    //precalc formats
-    this.input = util.normalize(this.input);
-    this.output = util.normalize(this.output);
 }
 
 inherits(PCMFormat, Through);
