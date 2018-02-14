@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/audiojs/audio-pcm-format",
   "devDependencies": {
-    "mocha": "^2.3.3"
+    "mocha": "^3.2.0"
   },
   "dependencies": {
     "inherits": "^2.0.1",
