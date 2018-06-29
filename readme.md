@@ -33,3 +33,5 @@ PcmFormat.default === {
 > **Related**<br/>
 > [pcm-util](https://npmjs.org/package/pcm-util) — utils for pcm transforms.<br/>
 > [pcm-format](https://npmjs.org/package/pcm-format) — transforms pcm stream per sample.<br/>
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/audiojs/audio-pcm-format.svg)](https://greenkeeper.io/)
